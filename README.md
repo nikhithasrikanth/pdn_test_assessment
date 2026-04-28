@@ -1,29 +1,9 @@
-# PDN Load Transient Test Automation
+This work develops an automated test framework in Python for the testing of load transient performance of a multi-rail PDN. It is done using the PyVISA library along with the SCPI commands to program all the lab instruments like the power supply, load, oscilloscope, and multimeter.
 
-This repository automates load transient testing for a four‑rail Power Distribution Network:
-3.6V, 1.8V, 3.3V, and 2.5V.
+The system subjects each rail to a series of controlled load steps using the electronic load, while the oscilloscope records the transient waveforms, and the DMM measures the steady state output voltage of each rail. The YAML file specifies the voltage levels, load step values, and transient conditions for each rail.
 
-## Features
-- PyVISA-based SCPI control for PSU, Electronic Load, Scope, and DMM
-- Automated load‑step generation
-- Transient waveform capture and storage
-- CSV logging with timestamp and Pass/Fail
-- Waveform file archiving
-- Configurable rail definitions (rails.yaml)
+During the run, each rail will be analyzed under various loads. The waveforms collected along with timestamps are stored for accountability, and the data obtained is checked against set limits to see whether the rail passes or fails. Voltage level of the load, and waveform files are all recorded in the form of a CSV file.
 
-## Required Hardware
-- Keithley 2230‑30‑1 Power Supply
-- Keithley 2380 Electronic Load
-- Keysight DSOX6004A Oscilloscope
-- Keithley DMM6500
+While the program gives a comprehensive framework for automated testing, overshoot and undershoot are still estimated based on waveforms rather than calculated from the waveform itself, and there is no mechanism for reporting the results statistically. Both of these problems may be overcome in future versions of the software.
 
-## Running the script
-1. Install Python 3.9+
-2. Install dependencies:
-   pip install pyvisa numpy pyyaml
-3. Connect instruments via USB
-4. Run:
-   python3 main.py
-
-CSV logs will appear in /logs  
-Waveforms will appear in /waveforms  
+In conclusion,   offers an effective methodology for validating PDNs through automation of instrumentation, execution, and result analysis.
