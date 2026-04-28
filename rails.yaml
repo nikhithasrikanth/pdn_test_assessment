@@ -1,0 +1,23 @@
+3V6:
+  nominal: 3.6
+  max_current: 2.5
+  transient_limit_mV: 100
+  load_steps: [0, 1.0, 2.5]
+
+1V8:
+  nominal: 1.8
+  max_current: 3
+  transient_limit_mV: 80
+  load_steps: [0, 1.0, 3]
+
+3V3:
+  nominal: 3.3
+  max_current: 3
+  transient_limit_mV: 100
+  load_steps: [0, 1.0, 3]
+
+2V5:
+  nominal: 2.5
+  max_current: 1.5
+  transient_limit_mV: 80
+  load_steps: [0, 0.5, 1.5]
