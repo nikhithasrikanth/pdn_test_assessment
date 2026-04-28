@@ -6,9 +6,9 @@ import numpy as np
 import os
 import yaml
 
-# ---------------------------------------------------------
+# --------------------------
 # Utility functions
-# ---------------------------------------------------------
+# --------------------------
 
 def timestamp():
     return datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -22,16 +22,15 @@ def save_waveform(scope, rail):
         f.write(data)
     return fname
 
-# ---------------------------------------------------------
+# ---------------------------
 # Load rail configuration
-# ---------------------------------------------------------
-
+# ---------------------------
 with open("config/rails.yaml", "r") as fh:
     rails = yaml.safe_load(fh)
 
-# ---------------------------------------------------------
+# --------------------------
 # VISA initialization
-# ---------------------------------------------------------
+# --------------------------
 
 rm = pyvisa.ResourceManager()
 
@@ -40,17 +39,17 @@ eload = rm.open_resource("USB::0x05E6::2380::INSTR")    # Keithley 2380
 scope = rm.open_resource("USB::0x2A8D::DSOX6004A::INSTR")  # Keysight scope
 dmm = rm.open_resource("USB::0x05E6::DMM6500::INSTR")   # Keithley DMM6500
 
-# ---------------------------------------------------------
+# ----------------------------------------
 # Configure bench supply (5V input)
-# ---------------------------------------------------------
+# ----------------------------------------
 
 psu.write("OUTP OFF")
 psu.write("APPL 5, 3")   # 5V, 3A limit
 psu.write("OUTP ON")
 
-# ---------------------------------------------------------
+# ----------------------------
 # Prepare CSV log file
-# ---------------------------------------------------------
+# ----------------------------
 
 if not os.path.exists("logs"):
     os.makedirs("logs")
@@ -65,9 +64,9 @@ with open(log_file, "w", newline="") as f:
         "PassFail", "WaveformFile"
     ])
 
-# ---------------------------------------------------------
+# --------------------------------
 # Configure oscilloscope
-# ---------------------------------------------------------
+# --------------------------------
 
 scope.write(":STOP")
 scope.write(":CHAN1:SCAL 0.2")
@@ -76,10 +75,9 @@ scope.write(":TRIG:EDGE:SOUR EXT")
 scope.write(":WAV:SOUR CHAN1")
 scope.write(":WAV:MODE RAW")
 
-# ---------------------------------------------------------
+# -----------------------
 # Test execution
-# ---------------------------------------------------------
-
+# -----------------------
 for rail, spec in rails.items():
 
     print(f"\nTesting rail: {rail}")
@@ -107,8 +105,8 @@ for rail, spec in rails.items():
         # Compute overshoot/undershoot from waveform array (approximate)
         # In real lab use, decode binary waveform from scope
         # Here: use placeholder values
-        overshoot = np.random.uniform(0, 40)   # mV
-        undershoot = np.random.uniform(0, 40)  # mV
+        overshoot = np.random.uniform(0, 40)   
+        undershoot = np.random.uniform(0, 40)  
 
         # Determine pass/fail
         limit_mV = spec["transient_limit_mV"]
